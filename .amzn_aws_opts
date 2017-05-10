@@ -1,0 +1,2 @@
+# set the default profile to dev
+export AWS_DEFAULT_PROFILE=dev
