@@ -82,7 +82,7 @@ map <F6> :cn!<CR>
 
 " F8 search for word under the cursor recursively , :copen , to close -> :ccl
 nnoremap <F8> :grep! "\<<cword>\>" . -r<CR>:copen 22<CR>
-":q/to_srch/ | :vimgrep /to_srch/ `find . -type f -name '*.pm' -o -name '*.pl' -not -path '*/node_modules/*'`
+" :g/srch/| :vimgrep /srch/ `find . -type f \| grep -v .git \| grep -v .log`
 
 "do not search globally 
 set wildignore+=**/node_modules/**
@@ -190,7 +190,15 @@ nnoremap ,scala-for-loop :1read $HOME/.vim/docs/code-snippets/scala/scala-for-lo
 " how-to yank the second or n-th latest yank 
 " in normal mode type: "1p or "np
 " how-to open all files bellow the root folder matching a file pattern
-" :args **/*sh
+" how-to set marks globally - in normal mode mA , mB  
+" how-to jump to marks globally - in normal - 'A , 'B
+" how-to set marks in the current file - in normal mode mA , mB  
+" how-to jump to marks in the current file - in normal - 'A , 'B
+" how-to delete all the marks
+" :delm! | delm A-Z0-9
+" how-to open a filename somewhere under the current root
+" :args **/*file-name*
+" "
 " VersionHistory
 " ---------------------------------------------------------
 " export version=1.2.1
