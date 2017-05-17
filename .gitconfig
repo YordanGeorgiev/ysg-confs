@@ -1,0 +1,31 @@
+[credential]
+	helper = cache
+
+[core]
+	editor = vim
+	pager = less -r
+	autocrlf = false
+
+[user]
+	name = Yordan Georgiev
+	email = yordan.georgiev@gmail.com
+
+[push]
+   default = simple
+
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = true
+  pager = true
+
+[color "status"]
+  added = green
+  changed = red bold
+  untracked = magenta bold
+
+[color "branch"]
+  remote = yellow
+
