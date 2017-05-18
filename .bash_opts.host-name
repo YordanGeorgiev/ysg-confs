@@ -1,9 +1,13 @@
+# set a nice prompt
+export PS1=" \u@\h [\d \t] [\w] $ \n\n  "
+
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=9999
 export HISTFILESIZE=10000
 
 # Avoid duplicates
 export HISTCONTROL=ignoredups:erasedups
+
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
 shopt -s direxpand # enable
@@ -15,9 +19,6 @@ export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; histor
 export PATH="$HOME/.linuxbrew/bin:$PATH"
 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-
-# set a nice prompt
-export PS1=" \u@\h [\d \t] [\w] $ \n\n  "
 
 # enable ctrl + s for forward searching in the history
 stty -ixon 
