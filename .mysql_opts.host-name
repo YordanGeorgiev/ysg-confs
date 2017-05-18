@@ -1,0 +1,15 @@
+# file: ~/.mysql_opts.$(hostname -s)
+# 
+# Purpose: 
+# to provide a boiler-plate for a mysql defaults file
+#
+# Usage: 
+# mysql --defaults-file=~/.mysql_opts.$(hostname -s) -D env_app_db -e "show tables;"
+ 
+[client]
+host=app_host
+user=usr_app_name
+password=GoodLuckTrying!
+
+# 
+# eof file: ~/.mysql_opts.$(hostname -s)
