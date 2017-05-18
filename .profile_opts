@@ -10,30 +10,31 @@
 # keep it as the only entry point to source and start sourcing all other 
 # bash opts , java opts or whatever opts files from this file
 
-# source my bash settings
-source ~/.bash_opts
 
 # source my bash functions
-source ~/.bash_funcs
+source ~/.bash_funcs.`hostname -s`
 
 # source my bash aliases
-source ~/.bash_aliases
+source ~/.bash_aliases.`hostname -s`
 
 # source my java settings
-source ~/.java_opts
+source ~/.java_opts.`hostname -s`
+
+# source my hadoop opts
+source ~/.hadoop_opts.`hostname -s`
 
 # source my prefered amzn aws settings
-source ~/.amzn_aws_opts
+source ~/.amzn_aws_opts.`hostname -s`
 
 # source my mysql opts
-source ~/.mysql_opts
+source ~/.mysql_opts.`hostname -s`
 
 # source my postgre opts
-source ~/.postgre_opts
+source ~/.postgre_opts.`hostname -s`
 
-source ~/.bash_secret
+source ~/.bash_secret.`hostname -s`
 
-# bonus: show a disk usage report
-df -a -h | tail -n +2   | perl -nle 'm/(.*)\s+(\d{1,2}%\s+(.*))/g;printf "%-20s %-15s %-70s \n","$2",$3,$1' | sort -nr
+# source my bash settings
+source ~/.bash_opts.`hostname -s`
 
 # eof file: ~/.profile_opts
