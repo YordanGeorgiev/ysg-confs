@@ -6,7 +6,7 @@ set imap_user="first_name.last_name@gmail.com"
 # check the following google help page:
 # http://support.google.com/accounts/bin/answer.py?answer=185833
 # that is set here your google application password
-set imap_pass="GoodLookTrying!"
+set imap_pass="GoodLuckTrying!"
 #nopeset imap_authenticators="gssapi"
 set imap_authenticators="gssapi:cram-md5:login"
 set certificate_file="~/.mutt/certificates"
@@ -27,7 +27,7 @@ set smtp_url="smtp://first_name.last_name@smtp.gmail.com:587"
 # check the following google help page:
 # http://support.google.com/accounts/bin/answer.py?answer=185833
 # that is set here your google application password
-set smtp_pass="GoodLookTrying!"
+set smtp_pass="GoodLuckTrying!"
 #
 ###LOCAL FOLDERS FOR CACHED HEADERS AND CERTIFICATES
 set header_cache="~/.mutt/cache/headers"
@@ -44,7 +44,6 @@ set sort_aux=last-date-received
 #
 ###Set editor to create new email
 set editor='vim'
-
 
 set ssl_starttls=yes
 set ssl_force_tls=yes
