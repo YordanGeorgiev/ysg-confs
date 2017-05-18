@@ -1,4 +1,4 @@
-# file: ~/.bash_funcs
+# file: ~/.bash_funcs.`hostname -s`
 # docs at the end ... 
 #
 
@@ -74,10 +74,6 @@ doSetUndefinedShellVarsFromCnfFile(){
 }
 #eof func doSetShellVarsFromCnfFile
 
-
-# set a global java_home
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-
 # a nice visual alias for the git 
 alias glol='git log --graph --pretty="%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
 
@@ -103,4 +99,4 @@ alias glol='git log --graph --pretty="%Cred%h%Creset -%C(yellow)%d%Creset %s %Cg
 # 1.0.0 --- 2016-08-01 22:04:33 -- initial version during host install
 #----------------------------------------------------------
 #
-#eof file: ~/.bash_functions
+#eof file: ~/.bash_funcs.`hostname -s`

@@ -1,14 +1,12 @@
 # file: ~/.profile_opts
 # 
 # purpose:
-# to be the entry point for the opts to be sourced on every machine
+# to be the entry point for the opts to be sourced on every machine with bash
+# to enable portability of well working generic opts between hosts
 #
 # usage:
-# source this file into your .bashrc aka:
+# souce this file into your ~/.bashrc by adding ONLY this line at the end:
 # source ~/.bash_srcs
-#
-# keep it as the only entry point to source and start sourcing all other 
-# bash opts , java opts or whatever opts files from this file
 
 
 # source my bash functions
