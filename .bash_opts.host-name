@@ -12,6 +12,9 @@ export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
 shopt -s direxpand # enable
 
+# change the terminal title
+export PROMPT_COMMAND='printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD}"'
+
 # After each command, append to the history file and reread it
 export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 
