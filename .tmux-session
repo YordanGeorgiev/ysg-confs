@@ -1,0 +1,4 @@
+sess--wrapp	win---run--wrapp	/opt/csitea/wrapp/wrapp.1.3.0.dev.ysg
+sess--wrapp	win---vim--wrapp	/opt/csitea/wrapp/wrapp.1.3.0.dev.ysg
+sess--wrapp	win---tst--wrapp	/opt/csitea/wrapp/wrapp.1.3.0.tst.ysg
+sess--wrapp	win---prd--wrapp	/opt/csitea/wrapp/wrapp.1.3.0.prd.ysg

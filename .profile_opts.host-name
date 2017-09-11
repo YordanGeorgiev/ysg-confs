@@ -10,31 +10,31 @@
 
 
 # source my bash functions
-source ~/.bash_funcs.`hostname -s`
+test -f ~/.bash_funcs.`hostname -s` && source ~/.bash_funcs.`hostname -s`
 
 # source my bash aliases
-source ~/.bash_aliases.`hostname -s`
+test -f ~/.bash_aliases.`hostname -s` && source ~/.bash_aliases.`hostname -s`
 
 # source my java settings
-source ~/.java_opts.`hostname -s`
+test -f ~/.java_opts.`hostname -s` && source ~/.java_opts.`hostname -s`
 
 # source my hadoop opts
-source ~/.hadoop_opts.`hostname -s`
+test -f ~/.hadoop_opts.`hostname -s` && source ~/.hadoop_opts.`hostname -s`
 
 # source my prefered amzn aws settings
-source ~/.amzn_aws_opts.`hostname -s`
+test -f ~/.amzn_aws_opts.`hostname -s` && source ~/.amzn_aws_opts.`hostname -s`
 
 # source my mysql opts
-source ~/.mysql_opts.`hostname -s`
+test -f ~/.mysql_opts.`hostname -s` && source ~/.mysql_opts.`hostname -s`
 
 # source my postgre opts
-source ~/.postgre_opts.`hostname -s`
+test -f ~/.postgre_opts.`hostname -s` && source ~/.postgre_opts.`hostname -s`
 
 # add some secrets ... 
-source ~/.bash_secret.`hostname -s`
+test -f ~/.bash_secret.`hostname -s` && source ~/.bash_secret.`hostname -s`
 
 # source my bash settings
-source ~/.bash_opts.`hostname -s`
+test -f ~/.bash_opts.`hostname -s` && source ~/.bash_opts.`hostname -s`
 
 
 # eof file: ~/.profile_opts
