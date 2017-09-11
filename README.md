@@ -21,6 +21,9 @@ Usage:
      # check the files
      ls -al
 
-     # if you are brave enough ...
+     # do not run by display the cmds to copy the cnf files to the host ...
      while read -r f ; do echo cp -v $f ~/$(`echo basename $f`|perl -ne "s/host-name/"`hostname -s`"/g;print") ; \
      done < <(find . -maxdepth 1 -type f  -name '.*')
+
+     # finally if you are into vim 
+     cp -vr .vim ~/
