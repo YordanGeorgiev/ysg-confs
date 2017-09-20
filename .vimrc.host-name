@@ -226,8 +226,8 @@ filetype plugin on
 " :delm! | delm A-Z0-9
 " how-to open a filename somewhere under the current root
 " :args **/*file-name*
-" how-to open files by patterns
-" :args **/*test.sh | execute 'argdo tabe %'
+" how-to open multiple files by patterns
+" :args **/*sbt*func.sh | execute 'argdo tabe %' | syntax on
 "
 " VersionHistory
 " ---------------------------------------------------------
