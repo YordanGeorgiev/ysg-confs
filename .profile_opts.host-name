@@ -36,6 +36,9 @@ test -f ~/.bash_secret.`hostname -s` && source ~/.bash_secret.`hostname -s`
 # source the hadoop
 test -f ~/.spark_opts.`hostname -s` && source ~/.spark_opts.`hostname -s`
 
+# source the python related vars
+test -f ~/.python_opts.`hostname -s` && source ~/.python_opts.`hostname -s`
+
 # source my bash settings
 test -f ~/.bash_opts.`hostname -s` && source ~/.bash_opts.`hostname -s`
 
