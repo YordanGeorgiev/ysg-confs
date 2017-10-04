@@ -7,6 +7,9 @@
 # usage:
 # souce this file into your ~/.bashrc by adding ONLY this line at the end:
 # source ~/.bash_srcs
+# cat << "EOF" >> ~/.bash_profile
+# source ~/.profile_opts.`hostname -s`
+# EOF
 
 
 # source my bash functions

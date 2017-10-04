@@ -28,5 +28,7 @@ Usage:
      # finally if you are into vim 
      cp -vr .vim ~/
 
-     # source all the configured files via the .profile_opts file from .bashrc
-     echo "source ~/.profile_opts.`hostname -s`" >> ~/.bashrc
+     # source all the configured files via the .profile_opts file from .bash_profile
+     # note , if you use .bashrc you will break your non-interractive shells , aka get scp errors
+     etc. ..
+     echo "source ~/.profile_opts.`hostname -s`" >> ~/.bash_profile
