@@ -1,8 +1,7 @@
-" file:~/.vimrc docs at the end
+" file:~/.vimrc docs at the end or search for "how-to"
 " everything after a double quote is a comment.
+" main principle - Don't put any lines in your vimrc that you don't understand !!!
 " enable syntax hightlighting
-
-
 
 " adjust the backspace behaviour 
 set backspace=indent,eol,start
@@ -96,6 +95,8 @@ set wildignore+=**/node_modules/**
 " use perl regexes - src: http://andrewradev.com/2011/05/08/vim-regexes/
 noremap / /\v
 "
+map <C-c><C-c> :!perl -wc %
+
 " use perltidy with pre-configured mojolicious settings
 " '<,'>!perltidy -pro=cnf/perl/.perltidyrc -q
 " STOP  search related configs and helps
@@ -190,7 +191,8 @@ command! Bd bd
 
 " src: https://www.youtube.com/watch?v=XA2WjJbmmoM
 filetype plugin on
-         
+
+
 
 " some cheats
 " to-upper-case in visual mode ~
@@ -210,6 +212,7 @@ filetype plugin on
 " ---------------------------------------------------------
 "
 " g/srch/#
+" how-to jump back and fortch visited code locations- Ctrl + O , Ctrl + I
 " how-to search for file / dir names starting with SomeStr
 " how-to srch for the word under the cursor forward - *
 " how-to srch for the word under the cursor backwards - #
@@ -229,10 +232,27 @@ filetype plugin on
 " how-to open multiple files by patterns
 " :args **/*sbt*func.sh | execute 'argdo tabe %' | syntax on
 "
+" how-to repeat the last change 
+" type . in normal mode
+"
+" how-to open multiple files with vim 
+" vim -o `find . -type f -name '*.pm'`
+" how-to open vim straight into a function
+" vim -t myCoolFunction
+" how-to use autocomplete in vim ( with ctags ) 
+" in insert mode Ctrl + P , Ctrl + N
+" how-to jump forth to the next letter of h on the same line
+" in normal mode: fh
+" how-to jump back to the next letter of h on the same line
+" in normal mode: Fh
+"
+" how-to use custom .vimrc
+" :source /path/to/your/.vimrc
 " VersionHistory
 " ---------------------------------------------------------
-" export version=1.2.4
+" export version=1.2.5
 "
+" 1.2.5 --- 2018-03-07 22:23:17 --- ysg --- open vim straight into func
 " 1.2.4 --- 2017-09-12 13:38:01 --- ysg --- how-to open files by patterns
 " 1.2.3 --- 2017-08-18 15:59:08 --- ysg --- more search related tips & tricks in docs
 " 1.2.2 --- 2017-05-27 22:45:14 --- ysg --- combine all src related confs and helps 
