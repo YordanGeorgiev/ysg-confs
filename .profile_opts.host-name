@@ -7,9 +7,6 @@
 # usage:
 # souce this file into your ~/.bashrc by adding ONLY this line at the end:
 # source ~/.bash_srcs
-# cat << "EOF" >> ~/.bash_profile
-# source ~/.profile_opts.`hostname -s`
-# EOF
 
 
 # source my bash functions
@@ -45,5 +42,7 @@ test -f ~/.python_opts.`hostname -s` && source ~/.python_opts.`hostname -s`
 # source my bash settings
 test -f ~/.bash_opts.`hostname -s` && source ~/.bash_opts.`hostname -s`
 
+# source my vim settings
+test -f ~/.vim_opts.`hostname -s` && source ~/.vim_opts.`hostname -s`
 
 # eof file: ~/.profile_opts
