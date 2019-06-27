@@ -286,15 +286,20 @@ let sh_fold_enabled=1
 let perl_extended_vars=1
 let perl_sync_dist=250
 
+
 " list of used plugins 
 " use tab tab for smart completion , set path=.,** if it takes too long to load
 " ~/.vim/plugin/smartcom.vim
 "
+" list of keyboard shortcuts
+" u - undo
+" Ctrl + R - redo
+" set the cursor at the top of the page in Normal mode - zt
 " VersionHistory
 " ---------------------------------------------------------
 " export version=1.2.8
 "
-" 1.2.7 --- 2019-03-02 15:30:30 --- ysg --- add easy completion , registers
+" 1.2.8 --- 2019-03-02 15:30:30 --- ysg --- add easy completion , registers
 " 1.2.7 --- 2018-12-22 11:30:30 --- ysg --- add folding
 " 1.2.6 --- 2018-03-25 10:53:02 --- ysg --- add smartcom.vim plugin
 " 1.2.5 --- 2018-03-07 22:23:17 --- ysg --- open vim straight into func

@@ -2,6 +2,38 @@
 # docs at the end ... 
 #
 
+#                                                                                                                       [31/23467]
+# call by: doParseCnfEnvVars cnf/qto.dev.host-name.cnf
+# ---------------------------------------------------------
+doParseCnfEnvVars(){
+
+   cnf_file=$1;shift 1;
+
+   test -z "$cnf_file" && echo " you should set the cnf_file !!!"
+
+   cnf_dir=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$cnf_file")
+   product_instance_dir=${cnf_dir%/*}
+
+   INI_SECTION=MainSection
+
+        ( set -o posix ; set ) | sort >~/vars.before
+
+        eval `sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
+                -e 's/#.*$//' \
+                -e 's/[[:space:]]*$//' \
+                -e 's/^[[:space:]]*//' \
+                -e "s|%ProductInstanceDir%|${product_instance_dir}|" \
+                -e "s/^\(.*\)=\([^\"']*\)$/export \1=\"\2\"/" \
+                < $cnf_file \
+                | sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
+
+   # and post-register for nice logging
+   ( set -o posix ; set ) | sort >~/vars.after
+
+   echo "INFO added the following vars from section: [$INI_SECTION]"
+   comm -3 ~/vars.before ~/vars.after | perl -ne 's#\s+##g;print "\n $_ "'
+}
+
 #
 # ---------------------------------------------------------
 # call by: doParseIniEnvVars sfw/sh/isg-pub/isg-pub.mini-nz.ysg-host-name.conf
@@ -37,21 +69,6 @@ doParseIniEnvVars(){
 # call by: doParseCnfEnvVars cnf/ysg-issues.prd.doc-pub-host.cnf
 #proj_alias=mini_nz
 # ---------------------------------------------------------
-doParseCnfEnvVars(){
-
-   cnf_file=$1;shift 1;
-   test -z "$cnf_file" && echo " you should set the cnf_file !!!"
-	
-   INI_SECTION=MainSection
-
-	eval `sed -e 's/[[:space:]]*\=[[:space:]]*/=/g' \
-		-e 's/#.*$//' \
-		-e 's/[[:space:]]*$//' \
-		-e 's/^[[:space:]]*//' \
-		-e "s/^\(.*\)=\([^\"']*\)$/export \1=\"\2\"/" \
-		< $cnf_file \
-		| sed -n -e "/^\[$INI_SECTION\]/,/^\s*\[/{/^[^#].*\=.*/p;}"`
-}
 
 doSetUndefinedShellVarsFromCnfFile(){
 
