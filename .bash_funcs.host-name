@@ -2,7 +2,7 @@
 # docs at the end ... 
 #
 
-#                                                                                                                       [31/23467]
+
 # call by: doParseCnfEnvVars cnf/qto.dev.host-name.cnf
 # ---------------------------------------------------------
 doParseCnfEnvVars(){

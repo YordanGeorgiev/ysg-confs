@@ -43,3 +43,5 @@ fi
 # # show a disk usage report
 df -a -h | tail -n +2   | perl -nle 'm/(.*)\s+(\d{1,2}%\s+(.*))/g;printf "%-20s %-15s %-70s \n","$2",$3,$1' | sort -nr
 
+# usage:
+# wget -O ~/.bash_opts.`hostname -s` https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/.bash_opts.host-name
