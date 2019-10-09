@@ -303,7 +303,7 @@ let perl_sync_dist=250
 " Usage:
 " ---------------------------------------------------------
 "  wget -O ~/.vimrc https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/.vimrc.host-name
-"  sudo perl -pi -e '$_="$_\nhi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE" if $. == 27' /usr/share/vim/vim80/colors/elflord.vim
+"  sudo perl -pi -e '$_="$_\nhi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE" if $. == 27' $(locate elflord.vim)
 "
 " Version
 " ---------------------------------------------------------
