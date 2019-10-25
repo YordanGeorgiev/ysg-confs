@@ -1,4 +1,5 @@
 met
+src/bash/deployer/setup-bash-n-vim.sh
 met/.dev.ysg-confs
 README.md
 .amzn_aws_opts.host-name
