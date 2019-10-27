@@ -1,16 +1,21 @@
 #!/bin/bash
 # usage:
 # curl https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/src/bash/deployer/setup-bash-n-vim.sh | bash
+
 main(){
    do_enable_locate
    do_provision_tmux
    do_provision_vim
+   do_provision_git
+   do_enrich_bash_history
    do_provision_bash
 }
+
 
 do_enable_locate(){
    sudo updatedb & # because of the locate elflord.vim bellow and just to speed up..
 }
+
 
 do_provision_tmux(){
 
@@ -32,7 +37,9 @@ do_provision_tmux(){
 
 }
 
+
 do_provision_vim(){
+
    echo 'start ::: provisioning vim'
    which vim 2>/dev/null || {
       sudo apt-get update
@@ -48,15 +55,77 @@ do_provision_vim(){
       '$_="$_\nhi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE"
       if $. == 27' $(locate elflord.vim) &
    echo 'stop ::: provisioning vim'
+
+}
+
+
+
+
+do_enrich_bash_history(){
+
+cat << EOF_HIS >> ~/.bash_history
+   ssh-keygen -t rsa -b 4096 -C "me@gmail.com"
+   git add --all ; git commit -m "$git_msg" --author "Yordan Georgiev <yordan.georgiev@gmail.com"; git push
+EOF_HIS
+
+}
+
+
+do_provision_git(){
+
+   echo 'start ::: provisioning git'
+   test -f ~/.gitconfig && cp -v ~/.gitconfig ~/.gitconfig.$(date "+%Y%m%d_%H%M%S")
+
+cat << EOF_GIT >> ~/.gitconfig
+
+   [credential]
+     helper = cache
+
+   [core]
+     editor = vim
+     pager = less -r
+     autocrlf = false
+
+   [user]
+      name = Yordan Georgiev
+
+   [push]
+      default = simple
+      followTags = true
+
+   [color]
+     diff = auto
+     status = auto
+     branch = auto
+     interactive = auto
+     ui = true
+     pager = true
+
+   [color "status"]
+     added = green
+     changed = red bold
+     untracked = magenta bold
+
+   [color "branch"]
+     remote = yellow
+
+   [fetch]
+      prune = true
+EOF_GIT
+
+   echo 'stop ::: provisioning git'
+
 }
 
 do_provision_bash(){
+
    echo 'start ::: fetching bash_opts'
    wget -O ~/.bash_opts.`hostname -s` \
       'https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/.bash_opts.host-name'
 
    echo "source ~/.bash_opts.`hostname -s`"
    echo 'stop  ::: fetching bash_opts'
+
 }
 
 # Action !!!
