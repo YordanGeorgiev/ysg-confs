@@ -51,6 +51,19 @@ do_provision_vim(){
    }
    test -f ~/.vimrc && cp -v ~/.vimrc ~/.vimrc.$(date "+%Y%m%d_%H%M%S")
    wget -O ~/.vimrc 'https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/.vimrc.host-name'
+
+   # set the ngix syntax highlighting 
+   mkdir -p ~/.vim/syntax/
+   cd ~/.vim/syntax/
+   wget http://www.vim.org/scripts/download_script.php?src_id=19394
+   mv download_script.php\?src_id\=19394 nginx.vim
+   cat > ~/.vim/filetype.vim <<EOF_NGINX
+   au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/* if &ft == '' | setfiletype nginx | endif
+EOF_NGINX
+   sudo cp -rv ~/.vim/ /root/
+   cd -
+
+   # set the grey color on the nums on the left ...
    sudo perl -pi -e \
       '$_="$_\nhi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE"
       if $. == 27' $(locate elflord.vim) &
