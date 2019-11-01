@@ -1,14 +1,18 @@
 #!/bin/bash
+# purpose: a SLIGHTLY opinionated bash,tmux,vim and git setup 
 # usage:
-# curl https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/src/bash/deployer/setup-bash-n-vim.sh | bash
+# curl https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/src/bash/deployer/setup-bash-n-vim.sh | bash -s yordan.georgiev@gmail.com
 
 main(){
    do_enable_locate
    do_provision_tmux
    do_provision_vim
    do_provision_git
+   do_provision_ssh_keys
    do_enrich_bash_history
+	do_fake_history
    do_provision_bash
+	do_echo_copy_pasteables
 }
 
 
@@ -72,18 +76,6 @@ EOF_NGINX
 }
 
 
-
-
-do_enrich_bash_history(){
-
-cat << EOF_HIS >> ~/.bash_history
-   ssh-keygen -t rsa -b 4096 -C "me@gmail.com"
-   git add --all ; git commit -m "$git_msg" --author "Yordan Georgiev <yordan.georgiev@gmail.com"; git push
-EOF_HIS
-
-}
-
-
 do_provision_git(){
 
    echo 'start ::: provisioning git'
@@ -130,16 +122,68 @@ EOF_GIT
 
 }
 
+
+do_provision_ssh_keys(){
+ 
+	email=${1:=yordan.georgiev@gmail.com}
+   expect <<- EOF_EXPECT
+      set timeout -1
+      spawn ssh-keygen -t rsa -b 4096 -C $email -f ~/.ssh/id_rsa.ysg.`hostname -s`
+      expect "Overwrite (y/n)?"
+      send -- "y\r"
+      expect "Enter passphrase (empty for no passphrase): "
+      send -- "\r"
+		expect "Enter same passphrase again: "
+      send -- "\r"
+      expect eof
+EOF_EXPECT
+
+}
+
 do_provision_bash(){
 
    echo 'start ::: fetching bash_opts'
    wget -O ~/.bash_opts.`hostname -s` \
       'https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/.bash_opts.host-name'
 
-   echo "source ~/.bash_opts.`hostname -s`"
    echo 'stop  ::: fetching bash_opts'
 
 }
 
-# Action !!!
-main
+
+do_fake_history(){
+
+	cat << 'EOF_HIS' >> ~/.bash_history
+ssh-keygen -t rsa -b 4096 -C "yordan@phz.fi" -f ~/.ssh/id_rsa.ysg.`hostname -s`
+git log --format='%h %ai %an %m%m %s'
+alias git='GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg.`hostname -s`" git'
+git add --all ; git commit -m "$git_msg" --author "Yordan Georgiev <yordan.georgiev@phz.fi"; git push
+EOF_HIS
+
+}
+
+
+do_echo_copy_pasteables(){
+	cat ~/.ssh/id_rsa.ysg.`hostname -s`.pub
+	echo -e '\n\n'
+   echo "source ~/.bash_opts.`hostname -s`"
+	echo -e '\n\n'
+}
+
+
+main # and .... Action !!!
+
+# here is your parameter expansions cheat ;o) 
+# +--------------------+----------------------+-----------------+-----------------+
+# |                    |       parameter      |     parameter   |    parameter    |
+# |                    |   Set and Not Null   |   Set But Null  |      Unset      |
+# +--------------------+----------------------+-----------------+-----------------+
+# | ${parameter:-word} | substitute parameter | substitute word | substitute word |
+# | ${parameter-word}  | substitute parameter | substitute null | substitute word |
+# | ${parameter:=word} | substitute parameter | assign word     | assign word     |
+# | ${parameter=word}  | substitute parameter | substitute null | assign word     |
+# | ${parameter:?word} | substitute parameter | error, exit     | error, exit     |
+# | ${parameter?word}  | substitute parameter | substitute null | error, exit     |
+# | ${parameter:+word} | substitute word      | substitute null | substitute null |
+# | ${parameter+word}  | substitute word      | substitute word | substitute null |
+# +--------------------+----------------------+-----------------+-----------------+
