@@ -5,11 +5,11 @@
 
 main(){
    do_enable_locate
+   do_set_vars
    do_provision_tmux
    do_provision_vim
    do_provision_git
    do_provision_ssh_keys
-   do_enrich_bash_history
 	do_fake_history
    do_provision_bash
 	do_echo_copy_pasteables
@@ -18,6 +18,12 @@ main(){
 
 do_enable_locate(){
    sudo updatedb & # because of the locate elflord.vim bellow and just to speed up..
+}
+
+
+do_set_vars(){
+	email=${1:-yordan.georgiev@gmail.com}
+   host_name=`hostname -s`
 }
 
 
@@ -124,19 +130,22 @@ EOF_GIT
 
 
 do_provision_ssh_keys(){
- 
-	email=${1:=yordan.georgiev@gmail.com}
+
+   which expect || sudo apt-get update && sudo apt-get install -y expect
+
+   # if the ssh key does not exist create it ...
+   test -f ~/.ssh/id_rsa.ysg.pub.`hostname -s` || {
    expect <<- EOF_EXPECT
       set timeout -1
-      spawn ssh-keygen -t rsa -b 4096 -C $email -f ~/.ssh/id_rsa.ysg.`hostname -s`
-      expect "Overwrite (y/n)?"
-      send -- "y\r"
+      spawn ssh-keygen -t rsa -b 4096 -C $email -f $HOME/.ssh/id_rsa.ysg.$host_name
       expect "Enter passphrase (empty for no passphrase): "
       send -- "\r"
 		expect "Enter same passphrase again: "
       send -- "\r"
       expect eof
 EOF_EXPECT
+
+   }
 
 }
 
@@ -158,15 +167,18 @@ ssh-keygen -t rsa -b 4096 -C "yordan@phz.fi" -f ~/.ssh/id_rsa.ysg.`hostname -s`
 git log --format='%h %ai %an %m%m %s'
 alias git='GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg.`hostname -s`" git'
 git add --all ; git commit -m "$git_msg" --author "Yordan Georgiev <yordan.georgiev@phz.fi"; git push
+git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
+curr_branch=$(git rev-parse --abbrev-ref HEAD); git branch "$curr_branch"--$(date "+%Y%m%d_%H%M"); git branch -a | grep $curr_branch | sort -nr | less
 EOF_HIS
 
 }
 
 
 do_echo_copy_pasteables(){
-	cat ~/.ssh/id_rsa.ysg.`hostname -s`.pub
+	cat ~/.ssh/id_rsa.ysg.$host_name.pub
+	echo EOF ~/.ssh/id_rsa.ysg.$host_name.pub
 	echo -e '\n\n'
-   echo "source ~/.bash_opts.`hostname -s`"
+   echo "source ~/.bash_opts.$host_name"
 	echo -e '\n\n'
 }
 
