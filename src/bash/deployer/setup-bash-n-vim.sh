@@ -99,6 +99,7 @@ cat << EOF_GIT >> ~/.gitconfig
 
    [user]
       name = Yordan Georgiev
+      email = $email
 
    [push]
       default = simple
@@ -163,10 +164,10 @@ do_provision_bash(){
 do_fake_history(){
 
 	cat << 'EOF_HIS' >> ~/.bash_history
-ssh-keygen -t rsa -b 4096 -C "yordan@phz.fi" -f ~/.ssh/id_rsa.ysg.`hostname -s`
-git log --format='%h %ai %an %m%m %s'
+ssh-keygen -t rsa -b 4096 -C "yordan.georgiev@gmail.com" -f ~/.ssh/id_rsa.ysg.`hostname -s`
+clear ; git log --pretty --format='%h %<(15)%ae %<(15)%an ::: %s'
 alias git='GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg.`hostname -s`" git'
-git add --all ; git commit -m "$git_msg" --author "Yordan Georgiev <yordan.georgiev@phz.fi"; git push
+git add --all ; git commit -m "$git_msg" --author "Yordan Georgiev <yordan.georgiev@gmail.com"; git push
 git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
 curr_branch=$(git rev-parse --abbrev-ref HEAD); git branch "$curr_branch"--$(date "+%Y%m%d_%H%M"); git branch -a | grep $curr_branch | sort -nr | less
 EOF_HIS
