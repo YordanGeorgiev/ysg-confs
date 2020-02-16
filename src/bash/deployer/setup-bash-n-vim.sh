@@ -70,6 +70,17 @@ do_provision_vim(){
    cat > ~/.vim/filetype.vim <<EOF_NGINX
    au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/* if &ft == '' | setfiletype nginx | endif
 EOF_NGINX
+
+   # add the perl.vim
+   mkdir -p ~/.vim/ftplugin
+   wget -O ~/.vim/ftplugin/perl.vim \
+      'https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/.vim/ftplugin/perl.vim'
+
+   # add the smartcom 
+   mkdir -p ~/.vim/plugin
+   wget -O ~/.vim/plugin/smartcom.vim \
+      'https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/.vim/plugin/smartcom.vim'
+
    sudo cp -rv ~/.vim/ /root/
    cd -
 
