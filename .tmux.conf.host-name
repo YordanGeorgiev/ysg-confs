@@ -26,34 +26,6 @@ setw -g mode-keys vi # vim-style movement
 # `tmux prefix + Escape` starts copy mode.
 bind Escape copy-mode
 
-# `prefix + p` pastes the latest buffer
-bind p paste-buffer 
-#
-# # in copy mode…
-# `v` begins a selection. (movement keys to select the desired bits)
-bind -t vi-copy v begin-selection 
-# `y` copies the current selection to one of tmux's "paste buffers"
-bind -t vi-copy y copy-selection 
-# `V` changes between line- and columnwise selection
-bind -t vi-copy V rectangle-toggle 
-# when in copy mode act like vim for Yanking
-bind -t vi-copy Y copy-end-of-line 
-# ?!
-bind + delete-buffer
-
-# 
-# start ::: how-to build tmux from source on older boxes ?!
-# mkdir -p /tmp/tmux-install; cd /tmp/tmux-install
-# wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
-# tar xzvf libevent-2.0.21-stable.tar.gz
-# cd libevent-2.0.21-stable
-# ./configure && make
-# sudo make install
-# # on GentOS
-# sudo yum install -y ncurses-devel
-# # or Ubuntu
-# sudo apt-get install -y ncurses-dev
-# # clone the latest stable master branch version
 # git clone https://github.com/tmux/tmux.git
 # cd tmux/
 # sh autogen.sh
@@ -124,6 +96,20 @@ bind-key -n C-S-Right swap-window -t +1
 # x     kill window
 # swap-window -t 0
 # 
+# -#
+#  start ::: how-to build tmux from source on older boxes ?!
+#  mkdir -p /tmp/tmux-install; cd /tmp/tmux-install
+#  wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
+#  tar xzvf libevent-2.0.21-stable.tar.gz
+#  cd libevent-2.0.21-stable
+#  ./configure && make
+#  sudo make install
+#  # on GentOS
+#  sudo yum install -y ncurses-devel
+#  # or Ubuntu
+#  sudo apt-get install -y ncurses-dev
+#  # clone the latest stable master branch version
+#
 # how-to save the pane ouput to a file
 # <<prefix>>
 # :capture-pane -S -2000
