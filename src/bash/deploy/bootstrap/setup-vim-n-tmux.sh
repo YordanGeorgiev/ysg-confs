@@ -116,9 +116,11 @@ EOF_NGINX
    cd -
 
    # set the grey color on the nums on the left ...
-   sudo perl -pi -e \
-      '$_="$_\nhi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE"
-      if $. == 27' $(locate elflord.vim) &
+   while read -r fle_elflord ; do
+      sudo perl -pi -e \
+      '$_="$_\nhi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE" if $. == 27' \
+      $fle_elflord
+   done < <(locate elflord.vim)
    echo 'stop ::: provisioning vim'
 
 }
