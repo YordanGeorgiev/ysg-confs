@@ -7,6 +7,8 @@
 unbind C-b
 set-option -g prefix C-j
 bind-key C-j send-prefix
+bind-key C-j C-s
+bind-key C-j C-r
 
 # v1.0.2
 # enable vi mode
@@ -53,18 +55,22 @@ bind Escape copy-mode
 # enable search results highlighting in copy mode
 # src: https://github.com/tmux-plugins/tmux-copycat
 set -g @plugin 'tmux-plugins/tmux-copycat'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
 run '~/.tmux/plugins/tpm/tpm'
+run-shell ~/.tmux/plugins/tmux-resurrect/resurrect.tmux
 
 # Ctrl + Shift + Left , Ctrl + Shift + Right
 bind-key -n C-S-Left swap-window -t -1
 bind-key -n C-S-Right swap-window -t +1
 #
+
 #
 # Usage: 
 # ---------------------------------------------------------
 # place into your ~/.tmux.conf
 # reload by :
 # <<prefix>>, :source-file ~/.tmux.conf when in tmux session
+# tmux source-file ~/.tmux.conf
 #
 # reload plugings by: 
 # Ctrl + J, U

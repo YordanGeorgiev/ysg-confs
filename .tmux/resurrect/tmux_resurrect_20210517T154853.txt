@@ -1,0 +1,27 @@
+pane	0	0	:bash	0	:	0	:/hos/opt/cgf-boxer	1	bash	:
+pane	0	1	:bash	0	:	0	:/hos/.cgf-boxer	1	bash	:
+pane	0	2	:bash	0	:	0	:/hos/opt/cgf-core-api	1	bash	:
+pane	0	3	:bash	0	:	0	:/hos/opt/SE-aws-infra	1	bash	:
+pane	0	4	:bash	0	:	0	:/hos/.cgf-core-api	1	bash	:
+pane	0	5	:bash	0	:	0	:/hos/opt/se-backend-default	1	bash	:vim /home/ubuntu/opt/SpectralHA-API-backend/.github/workflows/push-deploy-analyse-ingest.yml
+vim /home/ubuntu/opt/SpectralHA-API-backend/microservices/spectralha-api/common/values.staging.yaml
+vim ./api-doc/deploy/helm/api-doc/values.stg.yaml
+vim ./experiment/deploy/helm/experiment/values.stg.yaml
+vim ./experiment/deploy/helm/experiment/values.stg.yaml
+pane	0	6	:bash	0	:	0	:/hos/opt/spawner	1	bash	:
+pane	0	7	:bash	0	:	0	:/hos/.spawner	1	bash	:
+pane	0	8	:bash	0	:	0	:/hos/opt/core-api	1	bash	:
+pane	0	9	:vim	1	:*	0	:/hos/opt/wrapp	1	vim	:vim /home/ubuntu/.tmux.conf
+pane	0	10	:bash	0	:-	0	:/hos/.core-api	1	bash	:
+window	0	0	0	:	c2fd,143x36,0,0,0
+window	0	1	0	:	c2fe,143x36,0,0,1
+window	0	2	0	:	c2ff,143x36,0,0,2
+window	0	3	0	:	c302,143x36,0,0,5
+window	0	4	0	:	c301,143x36,0,0,4
+window	0	5	0	:	c303,143x36,0,0,6
+window	0	6	0	:	c304,143x36,0,0,7
+window	0	7	0	:	c305,143x36,0,0,8
+window	0	8	0	:	c306,143x36,0,0,9
+window	0	9	1	:*	61b0,143x36,0,0,11
+window	0	10	0	:-	61af,143x36,0,0,10
+state	0	

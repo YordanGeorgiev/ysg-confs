@@ -1,0 +1,10 @@
+pane	0	0	:bash	0	:	0	:/hos/opt/cgf-boxer	1	bash	:
+pane	0	1	:bash	0	:	0	:/hos/.cgf-boxer	1	bash	:
+pane	0	2	:bash	0	:	0	:/hos/opt/cgf-core-api	1	bash	:
+pane	0	4	:bash	0	:	0	:/hos/.cgf-core-api	1	bash	:
+window	0	0	0	:	c2fd,143x36,0,0,0
+window	0	1	0	:	c2fe,143x36,0,0,1
+window	0	2	0	:	c2ff,143x36,0,0,2
+window	0	3	0	:	c302,143x36,0,0,5
+window	0	4	0	:	c301,143x36,0,0,4
+state	0	

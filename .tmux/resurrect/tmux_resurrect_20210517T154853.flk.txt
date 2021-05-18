@@ -1,0 +1,9 @@
+pane	0	6	:bash	0	:	0	:/hos/opt/spawner	1	bash	:
+pane	0	7	:bash	0	:	0	:/hos/.spawner	1	bash	:
+pane	0	8	:bash	0	:	0	:/hos/opt/core-api	1	bash	:
+pane	0	10	:bash	0	:-	0	:/hos/.core-api	1	bash	:
+window	0	0	0	:	c2fd,143x36,0,0,0
+window	0	1	0	:	c2fe,143x36,0,0,1
+window	0	2	0	:	c2ff,143x36,0,0,2
+window	0	3	0	:	c302,143x36,0,0,3
+state	0	

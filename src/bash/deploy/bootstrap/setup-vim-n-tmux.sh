@@ -1,29 +1,58 @@
 #!/bin/bash
 # purpose: a SLIGHTLY opinionated bash,tmux,vim and git setup 
 # usage:
-# curl https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/src/bash/deployer/setup-bash-n-vim.sh | bash -s yordan.georgiev@gmail.com
+# export email=<<my-email>>
+# curl https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/src/bash/deploy/bootstrap/setup-vim-n-tmux.sh | bash -s $email
 
 main(){
-   do_enable_locate
-   do_set_vars
-   do_provision_tmux
-   do_provision_vim
-   do_provision_git
-   do_provision_ssh_keys
+	do_enable_locate
+	do_set_vars "$@"
+	do_provision_tmux
+	do_provision_vim
+	do_provision_git
+	do_provision_ssh_keys
 	do_fake_history
-   do_provision_bash
+	do_provision_bash
 	do_echo_copy_pasteables
 }
 
+#TODO: not used.
+do_print_usage(){
+
+cat << EOF_USAGE 
+	curl <<url>> | bash -s <<email>>
+EOF_USAGE
+
+}
 
 do_enable_locate(){
+   sudo apt-get install -y mlocate
    sudo updatedb & # because of the locate elflord.vim bellow and just to speed up..
 }
 
 
+# echo pass params and print them to a log file and terminal
+# usage:
+# do_log "INFO some info message"
+# do_log "DEBUG some debug message"
+#------------------------------------------------------------------------------
+do_log(){
+   type_of_msg=$(echo $*|cut -d" " -f1)
+   msg="$(echo $*|cut -d" " -f2-)"
+   [[ -t 1 ]] && echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [setup-vim-n-tmux][@$host_name] [$$] $msg "
+   log_dir="$PRODUCT_DIR/dat/log/bash" ; mkdir -p $log_dir && log_file="$log_dir/setup-vim-n-tmux.`date "+%Y%m"`.log"
+   printf " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [setup-vim-n-tmux][@$host_name] [$$] $msg " >> $log_file
+}
+
 do_set_vars(){
-	email=${1:-yordan.georgiev@gmail.com}
-   host_name=`hostname -s`
+	set -u -o pipefail
+	email=${1:-}; shift
+	export host_name="$(hostname -s)"
+	export PRODUCT_DIR=$(perl -e 'use File::Basename; use Cwd "abs_path"; print dirname(abs_path(@ARGV[0]));' -- "$0")
+	test -z ${email:-} && {
+      echo "YOU MUST specify an email address";
+      exit 1;
+   }
 }
 
 
@@ -37,7 +66,9 @@ do_provision_tmux(){
    mkdir -p ~/.tmux/plugins
    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tmux-copycat
-   echo verify the tmux plugins
+   git clone https://github.com/tmux-plugins/tmux-resurrect ~/.tmux/plugins/tmux-resurrect
+
+   echo "verify the tmux plugins"
    find ~/.tmux/plugins -type d -maxdepth 2
 
    test -f ~/.tmux.conf && cp -v ~/.tmux.conf ~/.tmux.conf.$(date "+%Y%m%d_%H%M%S")
@@ -107,9 +138,9 @@ cat << EOF_GIT >> ~/.gitconfig
      editor = vim
      pager = less -r
      autocrlf = false
+	  filemode = false
 
    [user]
-      name = Yordan Georgiev
       email = $email
 
    [push]
@@ -149,7 +180,7 @@ do_provision_ssh_keys(){
    test -f ~/.ssh/id_rsa.ysg.pub.`hostname -s` || {
    expect <<- EOF_EXPECT
       set timeout -1
-      spawn ssh-keygen -t rsa -b 4096 -C $email -f $HOME/.ssh/id_rsa.ysg.$host_name
+      spawn ssh-keygen -t rsa -b 4096 -C $email -f $HOME/.ssh/id_rsa.$email
       expect "Enter passphrase (empty for no passphrase): "
       send -- "\r"
 		expect "Enter same passphrase again: "
@@ -169,15 +200,24 @@ do_provision_bash(){
 
    echo 'stop  ::: fetching bash_opts'
 
+   cat << "EOF_BASH_ALIASES" >> ~/.bash_aliases
+   # usage: source ~/.bash_aliases , instead of find type findd + rest of syntax
+   findd(){
+      dir=$1; shift ;
+      find  $dir -not -path "*/node_modules/*" -not -path "*/build/*" \
+         -not -path "*/.cache/*" -not -path "*/.git/*" -not -path "*/venv/*" $@
+   }
+EOF_BASH_ALIASES
+
 }
 
 
 do_fake_history(){
 
 	cat << 'EOF_HIS' >> ~/.bash_history
-ssh-keygen -t rsa -b 4096 -C "yordan.georgiev@gmail.com" -f ~/.ssh/id_rsa.ysg.`hostname -s`
+ssh-keygen -t rsa -b 4096 -C "$email" -f ~/.ssh/id_rsa.$email
 clear ; git log --pretty --format='%h %<(15)%ae %<(15)%an ::: %s'
-alias git='GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.ysg.`hostname -s`" git'
+export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.$email"
 git add --all ; git commit -m "$git_msg" --author "Yordan Georgiev <yordan.georgiev@gmail.com"; git push
 git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
 curr_branch=$(git rev-parse --abbrev-ref HEAD); git branch "$curr_branch"--$(date "+%Y%m%d_%H%M"); git branch -a | grep $curr_branch | sort -nr | less
@@ -187,15 +227,15 @@ EOF_HIS
 
 
 do_echo_copy_pasteables(){
-	cat ~/.ssh/id_rsa.ysg.$host_name.pub
-	echo EOF ~/.ssh/id_rsa.ysg.$host_name.pub
+	cat ~/.ssh/id_rsa.$email.pub
+	echo EOF ~/.ssh/id_rsa.$email.pub
 	echo -e '\n\n'
    echo "source ~/.bash_opts.$host_name"
 	echo -e '\n\n'
 }
 
 
-main # and .... Action !!!
+main "$@" # and .... Action !!!
 
 # here is your parameter expansions cheat ;o) 
 # +--------------------+----------------------+-----------------+-----------------+
@@ -211,3 +251,4 @@ main # and .... Action !!!
 # | ${parameter:+word} | substitute word      | substitute null | substitute null |
 # | ${parameter+word}  | substitute word      | substitute word | substitute null |
 # +--------------------+----------------------+-----------------+-----------------+
+

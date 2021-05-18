@@ -1,0 +1,5 @@
+pane	0	3	:bash	0	:	0	:/hos/opt/SE-aws-infra	1	bash	:
+pane	0	5	:bash	0	:	0	:/hos/opt/se-backend-default	1	bash	:
+window	0	0	0	:	c2fd,143x36,0,0,0
+window	0	1	0	:	c2fe,143x36,0,0,1
+state	0	
