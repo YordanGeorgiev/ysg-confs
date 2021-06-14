@@ -26,6 +26,8 @@ hi Error	term=reverse ctermbg=Red ctermfg=White guibg=Red guifg=White
 hi Todo	term=standout ctermbg=Yellow ctermfg=Black guifg=Blue guibg=Yellow
 hi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
+hi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+hi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 " Common groups that link to default highlighting.
 " You can specify other highlighting easily.
 hi link String	Constant

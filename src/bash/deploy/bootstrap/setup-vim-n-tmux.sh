@@ -10,7 +10,7 @@ main(){
 	do_provision_tmux
 	do_provision_vim
 	do_provision_git
-	do_provision_ssh_keys
+	#do_provision_ssh_keys
 	do_fake_history
 	do_provision_bash
 	do_echo_copy_pasteables
@@ -66,6 +66,7 @@ do_provision_tmux(){
    mkdir -p ~/.tmux/plugins
    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tmux-copycat
+   git clone https://github.com/tmux-plugins/tmux-logging ~/.tmux/plugins/tmux-logging
    git clone https://github.com/tmux-plugins/tmux-resurrect ~/.tmux/plugins/tmux-resurrect
 
    echo "verify the tmux plugins"
