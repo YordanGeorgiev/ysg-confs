@@ -1,8 +1,10 @@
 #!/bin/bash
-# purpose: a SLIGHTLY opinionated bash,tmux,vim and git setup 
-# usage:
-# export email=<<my-email>>
-# curl https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/src/bash/deploy/bootstrap/setup-vim-n-tmux.sh | bash -s $email
+# file: src/bash/deploy/ubuntu/setup-min-shell-utils.sh
+# PURPOSE: 
+# an opinionated bash, tmux,vim and git setup to get full dev env on any ubuntu box in about 50 seconds
+# USAGE:
+# export email=me@org.com; curl https://raw.githubusercontent.com/YordanGeorgiev/ysg-confs/master/src/bash/deploy/ubuntu/setup-min-shell-utils.sh | bash -s $email
+
 
 main(){
 	do_enable_locate
@@ -10,39 +12,18 @@ main(){
 	do_provision_tmux
 	do_provision_vim
 	do_provision_git
-	#do_provision_ssh_keys
+	do_provision_ssh_keys
 	do_fake_history
 	do_provision_bash
 	do_echo_copy_pasteables
 }
 
-#TODO: not used.
-do_print_usage(){
-
-cat << EOF_USAGE 
-	curl <<url>> | bash -s <<email>>
-EOF_USAGE
-
-}
 
 do_enable_locate(){
    sudo apt-get install -y mlocate
    sudo updatedb & # because of the locate elflord.vim bellow and just to speed up..
 }
 
-
-# echo pass params and print them to a log file and terminal
-# usage:
-# do_log "INFO some info message"
-# do_log "DEBUG some debug message"
-#------------------------------------------------------------------------------
-do_log(){
-   type_of_msg=$(echo $*|cut -d" " -f1)
-   msg="$(echo $*|cut -d" " -f2-)"
-   [[ -t 1 ]] && echo " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [setup-vim-n-tmux][@$host_name] [$$] $msg "
-   log_dir="$PRODUCT_DIR/dat/log/bash" ; mkdir -p $log_dir && log_file="$log_dir/setup-vim-n-tmux.`date "+%Y%m"`.log"
-   printf " [$type_of_msg] `date "+%Y-%m-%d %H:%M:%S %Z"` [setup-vim-n-tmux][@$host_name] [$$] $msg " >> $log_file
-}
 
 do_set_vars(){
 	set -u -o pipefail
@@ -64,6 +45,7 @@ do_provision_tmux(){
       sudo apt-get install -y tmux
    }
    mkdir -p ~/.tmux/plugins
+   mkdir -p ~/.tmux/dat
    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tmux-copycat
    git clone https://github.com/tmux-plugins/tmux-logging ~/.tmux/plugins/tmux-logging
@@ -220,8 +202,10 @@ do_fake_history(){
 	cat << 'EOF_HIS' >> ~/.bash_history
 ssh-keygen -t rsa -b 4096 -C "$email" -f ~/.ssh/id_rsa.$email
 clear ; git log --pretty --format='%h %<(15)%ae %<(15)%an ::: %s'
-export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa.$email"
-git add --all ; git commit -m "$git_msg" --author "Yordan Georgiev <yordan.georgiev@gmail.com"; git push
+export email=yordan.georgiev@gmail.com ; export GIT_SSH_COMMAND="ssh -p 5522 -i ~/.ssh/id_rsa.$email"
+export git_msg='<<ticket_sys_id>> git push msg'
+git add --all ; git commit -m "$git_msg" --author "Yordan Georgiev <$email>"; git push
+git add --all ; git commit -m "$git_msg" --author "Yordan Georgiev <$email>" --amend; git push --force
 git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
 curr_branch=$(git rev-parse --abbrev-ref HEAD); git branch "$curr_branch"--$(date "+%Y%m%d_%H%M"); git branch -a | grep $curr_branch | sort -nr | less
 EOF_HIS
