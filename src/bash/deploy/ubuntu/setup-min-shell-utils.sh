@@ -104,6 +104,12 @@ EOF_NGINX
       '$_="$_\nhi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE" if $. == 27' \
       $fle_elflord
    done < <(locate elflord.vim)
+
+
+   mkdir -p ~/.vim/pack/editorconfig/start
+   cd ~/.vim/pack/editorconfig/start
+   git clone https://github.com/editorconfig/editorconfig-vim.git
+
    echo 'stop ::: provisioning vim'
 
 }
